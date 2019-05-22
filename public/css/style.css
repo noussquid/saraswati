@@ -1,0 +1,44 @@
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+canvas {
+    overflow: hidden;
+}
+
+#scale-element {
+  display: block;
+  max-width: 100%;
+  margin: auto;
+  touch-action: none;
+}
+
+#scale-element.reset {
+  transition: -webkit-transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out;
+}
+
+
+.splash.try# hitarea {
+        background: #fff;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 150 px;
+        height: 150 px;
+        cursor: pointer; -
+        ms - touch - select: none; -
+        webkit - touch - callout: none; -
+        webkit - tap - highlight - color: rgba(0, 0, 0, 0);
+    }
+
+    .splash.try# hitarea.animate {
+        transition: all 0.3 s;
+    }
+.rainbow-pixel-canvas {
+  border: solid 2px gray;
+  
+  -ms-touch-action: none;
+      touch-action: none;
+}

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script> 
+    <script src="/js/libs/hammer.min.js"></script>    
+    <script src="/draw/socket.io/socket.io.js"></script>
+    <script src="/js/socket.js"></script>
+    <script src="/js/libs/p5/p5.js"></script>
+    <script src="/js/libs/p5/addons/p5.dom.js"></script>
+    <script src="/js/libs/p5/p5.speech.js"></script>
+    <script src="/js/libs/p5/p5.collide2d.js"></script>
+    <script src="https://requirejs.org/docs/release/2.3.6/minified/require.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="/js/libs/microsoft.cognitiveservices.speech.sdk.bundle.js"></script>
+    <script src="/js/van_gogh.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <script>$(function () {
+        const socket = io('/', {
+            secure: true, 
+            rejectUnathorized: false, 
+            path: '/draw/socket.io'
+        });
+
+        let sessionId = socket.id;
+
+
+    });
+    </script>
+    <title>Van Gogh</title>
+</head>
+<body>
+    <div id="mainCanvas-div" class="rainbox-pixel-canvas"></div>
+</body>
+</html>
