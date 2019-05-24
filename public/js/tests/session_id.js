@@ -10,16 +10,22 @@ function setup() {
     console.log('we are in setup');
 
     // Make the canvas the size of the mobile device screen
-    mainCanvas = createCanvas(640, 480);
-    mainCanvas.parent('mainCanvas-div');
+    mainCanvas = createCanvas(2000, 2000);
+    mainCanvas.parent('dragWrapper');
     mainCanvas.style('display', 'block');
 
     // create a tile
     // make the div id socket.id
     my_tile = createTile(socket.id);
     my_tile.position(0, 0);
-    my_tile.size(width, height);
-    my_tile.elt.innerText = socket.id;
+    my_tile.size(displayWidth / 8 , displayWidth / 8);
+
+    if (socket.id == undefined) {
+        my_tile.elt.innerText = 'tap me'
+    } else {
+        my_tile.elt.innerText = socket.id;
+    }
+
 
     el = document.getElementById(socket.id);
 
@@ -36,7 +42,7 @@ function setup() {
 
 function createTile(id) {
     let tile = createDiv();
-    tile.parent('mainCanvas-div');
+    tile.parent('dragWrapper');
     tile.elt.id = id;
     tile.style("stroke", "red");
     tile.style("fill", "blue");

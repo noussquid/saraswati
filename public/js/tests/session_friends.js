@@ -18,8 +18,6 @@ let boxSize = 128;
 let mainCanvas;
 let gridCanvas;
 
-let SpeechSDK;
-let recorder; 
 
 // this sketch answers the question of 
 // does the socket.id change
@@ -42,11 +40,6 @@ function setup() {
     my_tile = createTile(socket.id);
     my_tile.position(displayWidth / 2, displayHeight / 2);
     my_tile.size(boxSize, boxSize);
-
-    if (!!window.SpeechSDK) {
-        SpeechSDK = window.SpeechSDK;
-        console.log(window.SpeechSDK);
-    }
 
     if (socket.id == undefined) {
         my_tile.elt.innerText = 'tap me'

@@ -8,21 +8,20 @@ canvas {
 }
 
 #dragWrapper{
-	margin: 40px;
-	background: whitesmoke;
     width: calc(100vw - 80px);
     height: calc(100vh - 80px);
     position: relative;
 }
 
+
 #drag {
-	touch-action: auto;
+    touch-action: auto;
     height: calc(100vw / 8);
     width: calc(100vw / 8 );
     position: absolute;
     left: 0;
     top: 0;
-	background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Bergelut_dengan_asap_nan_beracun.jpg/318px-Bergelut_dengan_asap_nan_beracun.jpg');
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Bergelut_dengan_asap_nan_beracun.jpg/318px-Bergelut_dengan_asap_nan_beracun.jpg');
     background-size: cover;
 }
 

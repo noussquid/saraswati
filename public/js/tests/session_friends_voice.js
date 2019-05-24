@@ -19,7 +19,9 @@ let mainCanvas;
 let gridCanvas;
 
 let SpeechSDK;
-let recorder; 
+let recorder;
+let speechConfig;
+let audioConfig;
 
 // this sketch answers the question of 
 // does the socket.id change
@@ -77,9 +79,31 @@ function setup() {
         taps: 2
     }));
     mc_el.add(new Hammer.Tap());
+
     mc_el.on("tap", function(ev) {
         my_tile.style('color', 'blue');
         my_tile.elt.innerText = socket.id;
+
+        speechConfig = SpeechSDK.SpeechConfig.fromSubscription('f94f9f7638554a1da4f61cedda978d9f', 'westus');
+        speechConfig.speechRecognitionLanguage = "en-US";
+
+        var audioConfig = SpeechSDK.AudioConfig.fromDefaultMicrophoneInput();
+        recognizer = new SpeechSDK.SpeechRecognizer(speechConfig, audioConfig);
+
+        recognizer.recognizeOnceAsync(
+            function(result) {
+                my_tile.elt.innerText = result.text;
+                window.console.log(result);
+
+                recognizer.close();
+                recognizer = undefined;
+            },
+            function(err) {
+                window.console.log(err);
+
+                recognizer.close();
+                recognizer = undefined;
+            });
 
         let data = {
             type: ev.type,
@@ -116,36 +140,34 @@ function setup() {
                 break;
             }
         }
-        
+
         my_tile.x = grid_x;
         my_tile.y = grid_y;
         my_tile.elt.innerText = ev.type;
         my_tile.position(grid_x, grid_y);
- 
 
 
-       
         for (var i = 0; i < friends_tiles.length; i++) {
             hit = collideRectRect(my_tile.x, my_tile.y, my_tile.width, my_tile.height, friends_tiles[i].x, friends_tiles[i].y, friends_tiles[i].width, friends_tiles[i].height);
             if (hit) {
                 friends_tiles[i].elt.style.outlineColor = "yellow";
                 my_tile.elt.style.outlineColor = "yellow";
-           
+
                 if (ev.type == 'panend') {
                     console.log('my_tile, friends_tile[i]', my_tile, friends_tiles[i]);
-                    if ( friends_tiles[i].x < my_tile.x && friends_tiles[i].y < my_tile.y) {
+                    if (friends_tiles[i].x < my_tile.x && friends_tiles[i].y < my_tile.y) {
                         my_tile.x = friends_tiles[i].x + my_tile.width;
                         my_tile.y = friends_tiles[i].y;
                         my_tile.position(my_tile.x, my_tile.y);
                     }
 
-                    if ( friends_tiles[i].x > my_tile.x ) {
+                    if (friends_tiles[i].x > my_tile.x) {
                         my_tile.x = friends_tiles[i].x - my_tile.width;
                         my_tile.y = friends_tiles[i].y;
                         my_tile.position(my_tile.x, my_tile.y);
                     }
 
-                    if ( my_tile.y > friends_tiles[i].y && my_tile.x >= friends_tiles[i].x) {
+                    if (my_tile.y > friends_tiles[i].y && my_tile.x >= friends_tiles[i].x) {
                         my_tile.x = friends_tiles[i].x;
                         my_tile.position(my_tile.x, my_tile.y);
                     }
@@ -157,7 +179,7 @@ function setup() {
             }
 
         }
-        
+
         my_tile.elt.textContent = '(' + my_tile.x + ' ' + my_tile.y + ')\n' + ev.type;
 
         let data = {

@@ -16,6 +16,7 @@ let boxSize = 128;
 let mainCanvas;
 let gridCanvas;
 
+
 let element;
 let hammertime;
 let fixHammerjsDeltaIssue;
@@ -34,14 +35,15 @@ function setup() {
     // Make the canvas the size of the mobile device screen
     mainCanvas = createCanvas(displayWidth, displayHeight);
     mainCanvas.parent('dragWrapper');
+    mainCanvas.size(displayWidth, displayHeight); 
 
-	txt = createDiv('gestureDiv');
+    txt = createDiv('gestureDiv');
     txt.elt.innerText = 'touch me';
 
     coords = createDiv('coordsDiv');
     coords.style('color', 'red');
 
-
+ 
     var element = document.getElementById('drag')
     var hammertime = new Hammer(element, {});
 
@@ -61,10 +63,10 @@ function setup() {
 
     var originalSize = {
         width: displayWidth / 8,
-        height: displayWidth / 8 
+        height: displayWidth / 8
     }
 
-	console.log(originalSize);
+    console.log(originalSize);
 
     var current = {
         x: 0,
@@ -83,7 +85,7 @@ function setup() {
 
     hammertime.on('doubletap', function(e) {
 
-		var scaleFactor = 1;
+        var scaleFactor = 1;
         if (current.zooming === false) {
             current.zooming = true;
         } else {
@@ -123,8 +125,8 @@ function setup() {
         current.x = last.x + e.deltaX - fixHammerjsDeltaIssue.x;
         current.y = last.y + e.deltaY - fixHammerjsDeltaIssue.y;
         lastEvent = 'pan';
-    	update(current, originalSize, element, txt, coords, e);		
-	})
+        update(current, originalSize, element, txt, coords, e);
+    })
 
     hammertime.on('pinch', function(e) {
         var d = scaleFrom(pinchZoomOrigin, last.z, last.z * e.scale, originalSize);
@@ -144,11 +146,11 @@ function setup() {
             y: pinchStart.y
         }, originalSize, current.z);
         lastEvent = 'pinchstart';
-	
-		txt.elt.innerText = ev.type + " gesture detected.";
-    	txt.position(current.x, current.y);
-    	coords.elt.innerText = '(' + current.x + ',' + current.y + ')';
-    	coords.position(current.x, current.y - 32);
+
+        txt.elt.innerText = ev.type + " gesture detected.";
+        txt.position(current.x, current.y);
+        coords.elt.innerText = '(' + current.x + ',' + current.y + ')';
+        coords.position(current.x, current.y - 32);
 
     })
 
@@ -206,7 +208,7 @@ function getCoords(elem) { // crossbrowser version
 }
 
 function scaleFrom(zoomOrigin, currentScale, newScale, originalSize) {
-	var currentShift = getCoordinateShiftDueToScale(originalSize, currentScale);
+    var currentShift = getCoordinateShiftDueToScale(originalSize, currentScale);
     var newShift = getCoordinateShiftDueToScale(originalSize, newScale)
 
     var zoomDistance = newScale - currentScale
@@ -225,7 +227,7 @@ function scaleFrom(zoomOrigin, currentScale, newScale, originalSize) {
 }
 
 function getCoordinateShiftDueToScale(size, scale) {
-	var newWidth = scale * size.width;
+    var newWidth = scale * size.width;
     var newHeight = scale * size.height;
     var dx = (newWidth - size.width) / 2
     var dy = (newHeight - size.height) / 2
@@ -237,7 +239,7 @@ function getCoordinateShiftDueToScale(size, scale) {
 
 function update(current, originalSize, element, txt, coords, ev) {
     current.height = originalSize.height * current.z;
-    current.width =  originalSize.width * current.z;
+    current.width = originalSize.width * current.z;
     element.style.transform = "translate3d(" + current.x + "px, " + current.y + "px, 0) scale(" + current.z + ")";
 
     txt.elt.innerText = ev.type + " gesture detected.";
@@ -245,3 +247,29 @@ function update(current, originalSize, element, txt, coords, ev) {
     coords.elt.innerText = '(' + current.x + ',' + current.y + ')';
     coords.position(current.x, current.y - 32);
 }
+
+// draw grid lines
+function drawGrid() {
+    stroke(0, 0, 0, 20);
+    for (let x = 0; x < width; x += col_width) {
+        line(x, 0, x, height);
+    }
+    for (let y = 0; y < height; y += row_height) {
+        line(0, y, width, y);
+    }
+}
+
+
+// init an array cols x rows large
+function create2DArray(cols, rows, value) {
+    let a = [];
+    for (let col = 0; col < cols; col++) {
+        a[col] = [];
+        for (let row = 0; row < rows; row++) {
+            a[col][row] = value;
+        }
+    }
+    return a;
+}
+
+
